@@ -44,7 +44,7 @@ public class Escalonador
         j++;
 
         while (linha != null) {
-          System.out.printf("%s\n", linha);
+          // System.out.printf("%s\n", linha);
           linha = lerArq.readLine(); // lê da segunda até a última linha
           processo[i][j] = linha;
           j++;
@@ -58,6 +58,14 @@ public class Escalonador
 
       System.out.println();
     }
+    j = 0;
+    for(int i = 0;i < 11; i++){
+      for(j = 0;j < 23; j++){
+        System.out.println(processo[i][j]);
+      }
+      System.out.println("");
+    }
+
   }
 
 }
