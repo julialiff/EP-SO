@@ -22,8 +22,8 @@ public class Escalonador
     arquivos[9] = "10.txt";
     arquivos[10] = "quantum.txt";
 
-    String[] processo;
-    processo = new String[21];
+    String[][] processo;
+    processo = new String[11][23];
 
     String nome = "01.txt";
     // System.out.printf("Informe o nome de arquivo texto:\n");
@@ -31,19 +31,23 @@ public class Escalonador
 
     System.out.printf("\nConteúdo do arquivo texto:\n");
 
+    int j = 0;
     for(int i = 0; i <= 10; i++){
+      j = 0;
       nome = arquivos[i];
+      System.out.println("Nome: " + nome + "[i][j] ["+i+"]["+j+"]");
       try {
         FileReader arq = new FileReader(nome);
         BufferedReader lerArq = new BufferedReader(arq);
-
         String linha = lerArq.readLine(); // lê a primeira linha
-  // a variável "linha" recebe o valor "null" quando o processo
-  // de repetição atingir o final do arquivo texto
+        processo[i][j] = linha;
+        j++;
+
         while (linha != null) {
           System.out.printf("%s\n", linha);
-
           linha = lerArq.readLine(); // lê da segunda até a última linha
+          processo[i][j] = linha;
+          j++;
         }
 
         arq.close();
