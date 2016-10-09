@@ -9,7 +9,7 @@ public class Escalonador
     //codigo aqui
     Scanner ler = new Scanner(System.in);
     String [] arquivos;
-    arquivos = new String[11];
+    arquivos = new String[10];
     arquivos[0] = "01.txt";
     arquivos[1] = "02.txt";
     arquivos[2] = "03.txt";
@@ -20,7 +20,20 @@ public class Escalonador
     arquivos[7] = "08.txt";
     arquivos[8] = "09.txt";
     arquivos[9] = "10.txt";
-    arquivos[10] = "quantum.txt";
+    // arquivos[10] = "quantum.txt";
+
+    int quantum;
+    try{
+      FileReader arqQuantum = new FileReader("quantum.txt");
+      BufferedReader lerQuantum = new BufferedReader(arqQuantum);
+      quantum = Integer.parseInt(lerQuantum.readLine());
+      arqQuantum.close();
+      System.out.printf("Quantum: " + quantum);
+    }
+    catch (IOException e) {
+          System.err.printf("Erro na abertura do arquivo: %s.\n",
+            e.getMessage());
+    }
 
     String[][] processo;
     processo = new String[11][23];
@@ -32,7 +45,7 @@ public class Escalonador
     System.out.printf("\nConteúdo do arquivo texto:\n");
 
     int j = 0;
-    for(int i = 0; i <= 10; i++){
+    for(int i = 0; i < 10; i++){
       j = 0;
       nome = arquivos[i];
       System.out.println("Nome: " + nome + "[i][j] ["+i+"]["+j+"]");
