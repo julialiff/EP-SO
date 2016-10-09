@@ -40,10 +40,6 @@ public class Fila<Item> {
         return item;
     }
 
-    public static void main(String[] args) {
-        QueueL<String> q = new QueueL<String>();
 
-
-    }
 
 }
