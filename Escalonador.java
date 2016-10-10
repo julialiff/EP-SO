@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Scanner;
 public class Escalonador
 {
+  protected int quantum;
+
   public static void main(String [] args)
   {
     //codigo aqui
@@ -22,40 +24,40 @@ public class Escalonador
     arquivos[9] = "10.txt";
     // arquivos[10] = "quantum.txt";
 
-    int quantum;
+    LinkedList<Processo> prontos = new LinkedList<Processo>();
+    LinkedList<Processo> bloqueados = new LinkedList<Processo>();
+
     try{
       FileReader arqQuantum = new FileReader("quantum.txt");
       BufferedReader lerQuantum = new BufferedReader(arqQuantum);
-      quantum = Integer.parseInt(lerQuantum.readLine());
+      this.quantum = Integer.parseInt(lerQuantum.readLine());
       arqQuantum.close();
-      System.out.printf("Quantum: " + quantum);
+      System.out.printf("Quantum: " + this.quantum);  
 
-      String[][] processo;
-      processo = new String[11][23];
-
-      String nome = "01.txt";
-      // System.out.printf("Informe o nome de arquivo texto:\n");
-      // String nome = ler.nextLine();
-
+      String nome;
+      
       System.out.printf("\nConteúdo do arquivo texto:\n");
 
-      int j = 0;
       for(int i = 0; i < 10; i++){
-        j = 0;
         nome = arquivos[i];
-        System.out.println("Nome: " + nome + "[i][j] ["+i+"]["+j+"]");
+        System.out.println("Nome: " + nome);
+        String [] instrucoes = new String[21];
+        int j = 0;
         try {
           FileReader arq = new FileReader(nome);
           BufferedReader lerArq = new BufferedReader(arq);
-          String linha = lerArq.readLine(); // lê a primeira linha
-          processo[i][j] = linha;
-          j++;
+          String nome = lerArq.readLine(); // lê a primeira linha
 
-          while (linha != null) {
-            // System.out.printf("%s\n", linha);
-            linha = lerArq.readLine(); // lê da segunda até a última linha
-            processo[i][j] = linha;
+          String line = lerArq.readLine();
+          while (line != null) {
+            instrucoes[i] = new String(line);
             j++;
+            line = lerArq.readLine();
+          }
+
+          Processo novo = new Processo(instrucoes);
+          if (novo.getEstado() == 0) {
+            prontos.push(novo);
           }
 
           arq.close();
@@ -66,20 +68,39 @@ public class Escalonador
 
         System.out.println();
       }
-      j = 0;
-      for(int i = 0;i < 11; i++){
-        for(j = 0;j < 23; j++){
-          System.out.println(processo[i][j]);
-        }
-        System.out.println("");
-      }
     }
     catch (IOException e) {
           System.err.printf("Erro na abertura do arquivo: %s.\n",
             e.getMessage());
     }
 
+    while(prontos.size() > 0 || bloqueados.size() > 0) {
+      int roundRobin = (int)(Math.random() * prontos.size());
 
+      Processo atual = prontos.remove(roundRobin);
+      atual.executa();
+
+      if (bloqueados.size() > 0) {
+        ListIterator<Processo> bloqueadosIterator = bloqueados.ListIterator(0);
+        while (bloqueadosIterator.hasNext()) {
+          Processo bloqueadoAtual = bloqueadosIterator.next();
+          bloqueadoAtual.espera();
+        }
+      }
+
+      switch (atual.getEstado()) {
+        case 0:
+          prontos.add(atual);
+          break;
+        case 1:
+          bloqueados.add(atual);
+          break;
+        case 2:
+          // corre pro abraco
+      }
+
+
+
+    }
   }
-
 }
