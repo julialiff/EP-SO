@@ -35,6 +35,7 @@ public class EP {
       Escalonador escalonador = new Escalonador(Integer.parseInt(lerQuantum.readLine()));
       arqQuantum.close();
       System.out.printf("Quantum: " + escalonador.getQuantum());
+      
       arquivo = new FileWriter(new File("Log0" + escalonador.getQuantum() + ".txt"));
 
       String nomeArq;
