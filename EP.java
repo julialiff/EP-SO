@@ -3,10 +3,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.LinkedList;
+import java.io.FileWriter;
+import java.io.File;
 
 public class EP {
   public static void main(String [] args) {
     //codigo aqui
+    FileWriter arquivo;
+
     Scanner ler = new Scanner(System.in);
     String [] arquivos;
     arquivos = new String[10];
@@ -31,6 +35,7 @@ public class EP {
       Escalonador escalonador = new Escalonador(Integer.parseInt(lerQuantum.readLine()));
       arqQuantum.close();
       System.out.printf("Quantum: " + escalonador.getQuantum());
+      arquivo = new FileWriter(new File("Log0" + escalonador.getQuantum() + ".txt"));
 
       String nomeArq;
       System.out.printf("\nConteúdo do arquivo texto:\n");
